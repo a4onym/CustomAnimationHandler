@@ -80,27 +80,27 @@
 			<Properties>
 				<BinaryString name="AttributesSerialize"></BinaryString>
 				<CoordinateFrame name="CFrame">
-					<X>-36.5905991</X>
-					<Y>8.64290237</Y>
-					<Z>-66.8651199</Z>
-					<R00>-0.281685442</R00>
-					<R01>-0.135694265</R01>
-					<R02>0.949863434</R02>
+					<X>-38.4365921</X>
+					<Y>13.2405167</Y>
+					<Z>104.762688</Z>
+					<R00>0.876329124</R00>
+					<R01>0.0459045731</R01>
+					<R02>-0.479520738</R02>
 					<R10>-0</R10>
-					<R11>0.989949703</R11>
-					<R12>0.141420841</R12>
-					<R20>-0.959506869</R20>
-					<R21>0.0398361906</R21>
-					<R22>-0.27885437</R22>
+					<R11>0.995449245</R11>
+					<R12>0.0952944607</R12>
+					<R20>0.481712937</R20>
+					<R21>-0.0835093111</R21>
+					<R22>0.872341037</R22>
 				</CoordinateFrame>
 				<Ref name="CameraSubject">null</Ref>
 				<token name="CameraType">0</token>
 				<float name="FieldOfView">70</float>
 				<token name="FieldOfViewMode">0</token>
 				<CoordinateFrame name="Focus">
-					<X>-38.4903259</X>
-					<Y>8.36006069</Y>
-					<Z>-66.3074112</Z>
+					<X>-37.4775505</X>
+					<Y>13.0499277</Y>
+					<Z>103.018005</Z>
 					<R00>1</R00>
 					<R01>0</R01>
 					<R02>0</R02>
@@ -567,6 +567,48 @@ gcLgc4RKxr21zq2UlJSM]]></BinaryString>
 				<BinaryString name="Tags"></BinaryString>
 				<UniqueId name="UniqueId">584aa774fc0ec812023d6c320001af7f</UniqueId>
 			</Properties>
+			<Item class="LocalScript" referent="RBX5945A02B416447408BAA282DB10D4118">
+				<Properties>
+					<BinaryString name="AttributesSerialize"></BinaryString>
+					<bool name="Disabled">false</bool>
+					<Content name="LinkedSource"><null></null></Content>
+					<string name="Name">test</string>
+					<string name="ScriptGuid">{EE8D1FAB-AEFB-4495-83F4-D6DCDCCAA6B0}</string>
+					<ProtectedString name="Source"><![CDATA[
+task.wait(2)
+
+local anim = "8812764539"
+local repst = game:GetService("ReplicatedStorage")
+local classes = repst:WaitForChild("Common")
+local anim_2 = repst.asdasd
+local mod = require(classes:WaitForChild("CustomAnimationHandler"))
+
+local animobject = mod.new(script.Parent, 2)
+
+local function callback()
+	
+	print("anim loaded")
+	
+end
+
+local load = animobject:PreLoadAnimations({anim}, callback)
+
+local succeed, track, deltatime = animobject:LoadAnimations({anim_2})
+
+local suceed = animobject:PlayAnimation("asdasd", {
+	
+	SPEED = 1
+	
+})
+
+task.wait(5)
+
+animobject:StopAnimation("asdasd", 0.1)]]></ProtectedString>
+					<int64 name="SourceAssetId">-1</int64>
+					<BinaryString name="Tags"></BinaryString>
+					<UniqueId name="UniqueId">0ddb98022907c47b023e47cd000b3bbb</UniqueId>
+				</Properties>
+			</Item>
 		</Item>
 	</Item>
 	<Item class="StarterPack" referent="RBXAB56A512EE4B44C193DE3B7FFC9EA727">
@@ -747,7 +789,7 @@ gcLgc4RKxr21zq2UlJSM]]></BinaryString>
 				<string name="ScriptGuid">{4E92D598-D3E2-427E-9681-5C1B2A83B4D0}</string>
 				<ProtectedString name="Source"><![CDATA[return {
 	port = 27843,
-	startAutomatically = false,
+	startAutomatically = true,
 	exclude = {
 		-- game:GetService("Workspace")
 	}
@@ -839,7 +881,7 @@ Class["__index"] = Class
 
 function Class.new(Model: Model, yieldTimeForComponents: number)
 	assert(Model ~= nil, script.Name .. " | Failed to load first argument")
-	assert(typeof(Model) ~= "Instance", script.Name .. " | First argument is required to be an Instance")
+	assert(typeof(Model) == "Instance", script.Name .. " | First argument is required to be an Instance")
 
 	local isaModel = nil
 
@@ -868,9 +910,8 @@ function Class.new(Model: Model, yieldTimeForComponents: number)
 					local classObject = {}
 					classObject["Animator"] = Animator
 					classObject["LoadedAnimations"] = {}
-					classObject["PlayingAnimations"] = {}
 
-					setmetatable(Class, classObject)
+					setmetatable(classObject, Class)
 
 					return classObject
 				end
@@ -882,13 +923,13 @@ end
 function Class:PreLoadAnimations(AnimationTable: table, CSPCallback: thread)
 	assert(AnimationTable ~= nil, script.Name .. " | Failed to find first argument, function: PreLoadAnimations")
 	assert(
-		typeof(AnimationTable) ~= "table",
+		typeof(AnimationTable) == "table",
 		script.Name .. " | First argument should be a table, function: PreLoadAnimations"
 	)
 
 	if CSPCallback ~= nil then
 		assert(
-			typeof(CSPCallback) ~= "function",
+			typeof(CSPCallback) == "function",
 			script.Name .. " | Second argument should be a function, function: PreLoadAnimations"
 		)
 	end
@@ -930,7 +971,7 @@ function Class:LoadAnimations(AnimationTable: table)
 	)
 	assert(AnimationTable ~= nil, script.Name .. " | Failed to find first argument, function: LoadAnimations")
 	assert(
-		typeof(AnimationTable) ~= "table",
+		typeof(AnimationTable) == "table",
 		script.Name .. " | First argument should be a table, function: LoadAnimations"
 	)
 	assert(
@@ -950,6 +991,7 @@ function Class:LoadAnimations(AnimationTable: table)
 				local Success, Respond = pcall(function()
 					local AnimationInstance: Animation = Instance.new("Animation")
 					AnimationInstance["AnimationId"] = Value
+					AnimationInstance["Name"] = Value
 					AnimationTable[Key] = AnimationInstance
 				end)
 
@@ -965,18 +1007,117 @@ function Class:LoadAnimations(AnimationTable: table)
 
 		local Success, Respond = pcall(function()
 			for Key, Value: Animation in pairs(AnimationTable) do
-				local Success, Respond = pcall(function()
-					Animator:LoadAnimation(Value)
+				local Success_2, Respond_2 = pcall(function()
+					local AnimationTrack = Animator:LoadAnimation(Value)
+					table.insert(self["LoadedAnimations"], AnimationTrack)
 				end)
 			end
 		end)
 
 		if Success then
-			return Success, DeltaTime
+			return Success, os.clock() - DeltaTime
 		else
 			return Success
 		end
 	end
+end
+
+function Class:PlayAnimation(AnimationName: string, SettingTable: table)
+	local LoadedAnimations: table = self["LoadedAnimations"]
+	local Animator: Animator = self["Animator"]
+
+	assert(AnimationName ~= nil, script.Name .. "| First argument is required")
+	assert(SettingTable ~= nil, script.Name .. "| Second argument is required")
+	assert(LoadedAnimations ~= nil, script.Name .. "| Animator property not found in object")
+	assert(Animator ~= nil, script.Name .. "| LoadedAnimations property not found in object")
+	assert(
+		typeof(AnimationName) == "string",
+		script.Name .. "| First argument is required to be the name of the animation"
+	)
+
+	if SettingTable ~= nil then
+		assert(typeof(SettingTable) == "table", script.Name .. "| Second argument is required to be a table")
+	end
+
+	local isFound: boolean, AnimationTrack: AnimationTrack = false, nil
+
+	local Success, Respond = pcall(function()
+
+		for Key, Value in pairs(LoadedAnimations) do
+
+			if Value.Name == AnimationName then
+
+				isFound, AnimationTrack = true, Value
+
+			end
+
+		end
+
+	end)
+
+	if isFound and AnimationTrack and Success then
+
+		local speed, fadeTime, weight = nil, nil, nil
+
+		for Key, Value in pairs(SettingTable) do
+			local Success, Respond = pcall(function()
+				if
+					tostring(string.lower(Key)) ~= "weight"
+					and tostring(string.lower(Key)) ~= "speed"
+					and tostring(string.lower(Key)) ~= "fadetime"
+				then
+					AnimationTrack[Key] = Value
+				else
+					if tostring(string.lower(Key)) == "weight" then
+						weight = Value
+					elseif tostring(string.lower(Key)) == "speed" then
+						speed = Value
+					elseif tostring(string.lower(Key)) == "fadetime" then
+						fadeTime = Value
+					end
+				end
+			end)
+		end
+
+		local Success_2, Respond_2 = pcall(function()
+			AnimationTrack:Play(fadeTime, weight, speed)
+		end)
+
+		return Success_2
+	end
+end
+
+function Class:StopAnimation(AnimationName: string, fadeTime : number)
+	
+	local LoadedAnimations: table = self["LoadedAnimations"]
+
+	assert(
+		typeof(AnimationName) == "string",
+		script.Name .. "| First argument is required to be the name of the animation"
+	)
+	assert(LoadedAnimations ~= nil, script.Name .. "| Animator property not found in object")
+	assert(typeof(LoadedAnimations) == "table", script.Name .. "| Second argument is required to be a table")
+
+	if fadeTime then
+		
+		assert(typeof(fadeTime) == "number", script.Name .. "| Second argument is required to be a number")
+
+	end
+
+	for Key, Value : AnimationTrack in pairs(LoadedAnimations) do
+		
+		local Success, Respond = pcall(function()
+			
+			if Value.Name == AnimationName and Value.IsPlaying then
+				
+				Value:Stop(fadeTime)
+
+			end
+
+		end)
+
+	end
+
 end
 
 return Class
@@ -986,6 +1127,16 @@ return Class
 					<UniqueId name="UniqueId">584aa774fc0ec812023d6c32000b365a</UniqueId>
 				</Properties>
 			</Item>
+		</Item>
+		<Item class="Animation" referent="RBX871A99332BFA4A67966B594C1D3985C4">
+			<Properties>
+				<Content name="AnimationId"><url>rbxassetid://8655535380</url></Content>
+				<BinaryString name="AttributesSerialize"></BinaryString>
+				<string name="Name">asdasd</string>
+				<int64 name="SourceAssetId">-1</int64>
+				<BinaryString name="Tags"></BinaryString>
+				<UniqueId name="UniqueId">61553dd2c6fa1639023e606c00136bcf</UniqueId>
+			</Properties>
 		</Item>
 	</Item>
 	<Item class="LuaWebService" referent="RBX909FE451EE8D4E838D4DB8FC9A128352">
@@ -1114,6 +1265,17 @@ return Class
 			<BinaryString name="Tags"></BinaryString>
 			<double name="Timeout">10</double>
 			<UniqueId name="UniqueId">584aa774fc0ec812023d6c32000b3078</UniqueId>
+		</Properties>
+	</Item>
+	<Item class="ProximityPromptService" referent="RBX5AE8815384D04C7CB6A40B069DCA7E99">
+		<Properties>
+			<BinaryString name="AttributesSerialize"></BinaryString>
+			<bool name="Enabled">true</bool>
+			<int name="MaxPromptsVisible">16</int>
+			<string name="Name">ProximityPromptService</string>
+			<int64 name="SourceAssetId">-1</int64>
+			<BinaryString name="Tags"></BinaryString>
+			<UniqueId name="UniqueId">0ddb98022907c47b023e47cd0033b6a8</UniqueId>
 		</Properties>
 	</Item>
 	<SharedStrings>
