@@ -147,8 +147,19 @@ function Class:LoadAnimations(AnimationTable: table)
 		local Success, Respond = pcall(function()
 			for Key, Value: Animation in pairs(AnimationTable) do
 				local Success_2, Respond_2 = pcall(function()
-					local AnimationTrack = Animator:LoadAnimation(Value)
-					table.insert(self["LoadedAnimations"], AnimationTrack)
+					local Check = false
+
+					local Success_3, Respond_3 = pcall(function()
+						for Key, Value_2 in pairs(self["LoadedAnimations"]) do
+							if Value_2["Name"] == Value["Name"] then
+								Check = true
+							end
+						end
+					end)
+					if Check == false then
+						local AnimationTrack = Animator:LoadAnimation(Value)
+						table.insert(self["LoadedAnimations"], AnimationTrack)
+					end
 				end)
 			end
 		end)
@@ -181,21 +192,14 @@ function Class:PlayAnimation(AnimationName: string, SettingTable: table)
 	local isFound: boolean, AnimationTrack: AnimationTrack = false, nil
 
 	local Success, Respond = pcall(function()
-
 		for Key, Value in pairs(LoadedAnimations) do
-
 			if Value.Name == AnimationName then
-
 				isFound, AnimationTrack = true, Value
-
 			end
-
 		end
-
 	end)
 
 	if isFound and AnimationTrack and Success then
-
 		local speed, fadeTime, weight = nil, nil, nil
 
 		for Key, Value in pairs(SettingTable) do
@@ -226,8 +230,7 @@ function Class:PlayAnimation(AnimationName: string, SettingTable: table)
 	end
 end
 
-function Class:StopAnimation(AnimationName: string, fadeTime : number)
-	
+function Class:StopAnimation(AnimationName: string, fadeTime: number)
 	local LoadedAnimations: table = self["LoadedAnimations"]
 
 	assert(
@@ -238,16 +241,33 @@ function Class:StopAnimation(AnimationName: string, fadeTime : number)
 	assert(typeof(LoadedAnimations) == "table", script.Name .. "| Second argument is required to be a table")
 
 	if fadeTime then
-		
 		assert(typeof(fadeTime) == "number", script.Name .. "| Second argument is required to be a number")
-
 	end
 
-	for Key, Value : AnimationTrack in pairs(LoadedAnimations) do
+	for Key, Value: AnimationTrack in pairs(LoadedAnimations) do
+		local Success, Respond = pcall(function()
+			if Value.Name == AnimationName and Value.IsPlaying then
+				Value:Stop(fadeTime)
+			end
+		end)
+	end
+end
+
+function  Class:StopAllAnimations(fadeTime : number)
+	
+	local LoadedAnimations: table = self["LoadedAnimations"]
+
+	assert(LoadedAnimations ~= nil, script.Name .. " | LoadedAnimations Table not found")
+
+	if fadeTime then
+		assert(typeof(fadeTime) == "number", script.Name .. "| Second argument is required to be a number")
+	end
+
+	for Key, Value: AnimationTrack in pairs(LoadedAnimations) do
 		
 		local Success, Respond = pcall(function()
 			
-			if Value.Name == AnimationName and Value.IsPlaying then
+			if Value["IsPlaying"] then
 				
 				Value:Stop(fadeTime)
 
