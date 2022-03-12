@@ -25,3 +25,4 @@ AnimationObject:StopAnimation(AnimationName, fadeTime)
 # ⚠️ WARNING
 
 To play an animation, it should be loaded with ```AnimationObject:LoadAnimation()``` function.
+Animation module supports STRING ANIMATION IDs and Animation Instances.
