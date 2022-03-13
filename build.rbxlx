@@ -80,27 +80,27 @@
 			<Properties>
 				<BinaryString name="AttributesSerialize"></BinaryString>
 				<CoordinateFrame name="CFrame">
-					<X>-38.4365921</X>
-					<Y>13.2405167</Y>
-					<Z>104.762688</Z>
-					<R00>0.876329124</R00>
-					<R01>0.0459045731</R01>
-					<R02>-0.479520738</R02>
-					<R10>-0</R10>
-					<R11>0.995449245</R11>
-					<R12>0.0952944607</R12>
-					<R20>0.481712937</R20>
-					<R21>-0.0835093111</R21>
-					<R22>0.872341037</R22>
+					<X>-6.41490316</X>
+					<Y>21.5148773</Y>
+					<Z>65.2141266</Z>
+					<R00>0.07948111</R00>
+					<R01>-0.285285592</R01>
+					<R02>0.955141306</R02>
+					<R10>-1.86264515e-09</R10>
+					<R11>0.958172619</R11>
+					<R12>0.286190987</R12>
+					<R20>-0.996836364</R20>
+					<R21>-0.022746779</R21>
+					<R22>0.0761566162</R22>
 				</CoordinateFrame>
 				<Ref name="CameraSubject">null</Ref>
 				<token name="CameraType">0</token>
 				<float name="FieldOfView">70</float>
 				<token name="FieldOfViewMode">0</token>
 				<CoordinateFrame name="Focus">
-					<X>-37.4775505</X>
-					<Y>13.0499277</Y>
-					<Z>103.018005</Z>
+					<X>-8.32518578</X>
+					<Y>20.9424953</Y>
+					<Z>65.0618134</Z>
 					<R00>1</R00>
 					<R01>0</R01>
 					<R02>0</R02>
@@ -382,7 +382,7 @@ gcLgc4RKxr21zq2UlJSM]]></BinaryString>
 			<int name="MaxPlayersInternal">12</int>
 			<string name="Name">Players</string>
 			<int name="PreferredPlayersInternal">0</int>
-			<float name="RespawnTime">5</float>
+			<float name="RespawnTime">0</float>
 			<int64 name="SourceAssetId">-1</int64>
 			<BinaryString name="Tags"></BinaryString>
 			<UniqueId name="UniqueId">584aa774fc0ec812023d6c320001aed0</UniqueId>
@@ -575,7 +575,6 @@ gcLgc4RKxr21zq2UlJSM]]></BinaryString>
 					<string name="Name">test</string>
 					<string name="ScriptGuid">{EE8D1FAB-AEFB-4495-83F4-D6DCDCCAA6B0}</string>
 					<ProtectedString name="Source"><![CDATA[
-task.wait(2)
 
 local anim = "8812764539"
 local repst = game:GetService("ReplicatedStorage")
@@ -604,7 +603,8 @@ local suceed = animobject:PlayAnimation("asdasd", {
 
 task.wait(2.5)
 
-animobject:StopAllAnimations(0.2)]]></ProtectedString>
+animobject:StopAllAnimations(0.2)
+animobject:__Destroy()]]></ProtectedString>
 					<int64 name="SourceAssetId">-1</int64>
 					<BinaryString name="Tags"></BinaryString>
 					<UniqueId name="UniqueId">0ddb98022907c47b023e47cd000b3bbb</UniqueId>
@@ -1136,6 +1136,16 @@ function  Class:StopAllAnimations(fadeTime : number)
 			end
 
 		end)
+
+	end
+
+end
+
+function Class:__Destroy()
+	
+	for Key, Value in pairs(self) do
+		
+		self[Key] = nil
 
 	end
 

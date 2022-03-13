@@ -279,4 +279,14 @@ function  Class:StopAllAnimations(fadeTime : number)
 
 end
 
+function Class:__Destroy()
+	
+	for Key, Value in pairs(self) do
+		
+		self[Key] = nil
+
+	end
+
+end
+
 return Class
