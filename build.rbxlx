@@ -604,7 +604,9 @@ local suceed = animobject:PlayAnimation("asdasd", {
 task.wait(2.5)
 
 animobject:StopAllAnimations(0.2)
-animobject:__Destroy()]]></ProtectedString>
+animobject:__Destroy()
+
+animobject:PlayAnimation("asdasd")]]></ProtectedString>
 					<int64 name="SourceAssetId">-1</int64>
 					<BinaryString name="Tags"></BinaryString>
 					<UniqueId name="UniqueId">0ddb98022907c47b023e47cd000b3bbb</UniqueId>
@@ -1115,8 +1117,7 @@ function Class:StopAnimation(AnimationName: string, fadeTime: number)
 	end
 end
 
-function  Class:StopAllAnimations(fadeTime : number)
-	
+function Class:StopAllAnimations(fadeTime: number)
 	local LoadedAnimations: table = self["LoadedAnimations"]
 
 	assert(LoadedAnimations ~= nil, script.Name .. " | LoadedAnimations Table not found")
@@ -1126,29 +1127,18 @@ function  Class:StopAllAnimations(fadeTime : number)
 	end
 
 	for Key, Value: AnimationTrack in pairs(LoadedAnimations) do
-		
 		local Success, Respond = pcall(function()
-			
 			if Value["IsPlaying"] then
-				
 				Value:Stop(fadeTime)
-
 			end
-
 		end)
-
 	end
-
 end
 
 function Class:__Destroy()
-	
-	for Key, Value in pairs(self) do
-		
-		self[Key] = nil
-
+	if self then
+		table.clear(self)
 	end
-
 end
 
 return Class

@@ -253,8 +253,7 @@ function Class:StopAnimation(AnimationName: string, fadeTime: number)
 	end
 end
 
-function  Class:StopAllAnimations(fadeTime : number)
-	
+function Class:StopAllAnimations(fadeTime: number)
 	local LoadedAnimations: table = self["LoadedAnimations"]
 
 	assert(LoadedAnimations ~= nil, script.Name .. " | LoadedAnimations Table not found")
@@ -264,29 +263,18 @@ function  Class:StopAllAnimations(fadeTime : number)
 	end
 
 	for Key, Value: AnimationTrack in pairs(LoadedAnimations) do
-		
 		local Success, Respond = pcall(function()
-			
 			if Value["IsPlaying"] then
-				
 				Value:Stop(fadeTime)
-
 			end
-
 		end)
-
 	end
-
 end
 
 function Class:__Destroy()
-	
-	for Key, Value in pairs(self) do
-		
-		self[Key] = nil
-
+	if self then
+		table.clear(self)
 	end
-
 end
 
 return Class
